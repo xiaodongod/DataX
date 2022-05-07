@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
  */
 public enum DataBaseType {
     MySql("mysql", "com.mysql.jdbc.Driver"),
+    MySql8("mysql8", "com.mysql.cj.jdbc.Driver"),
     Tddl("mysql", "com.mysql.jdbc.Driver"),
     DRDS("drds", "com.mysql.jdbc.Driver"),
     Oracle("oracle", "oracle.jdbc.OracleDriver"),
@@ -41,6 +42,14 @@ public enum DataBaseType {
         String result = jdbc;
         String suffix = null;
         switch (this) {
+            case MySql8:
+                suffix = "yearIsDateType=false&zeroDateTimeBehavior=CONVERT_TO_NULL&tinyInt1isBit=false&rewriteBatchedStatements=true";
+                if (jdbc.contains("?")) {
+                    result = jdbc + "&" + suffix;
+                } else {
+                    result = jdbc + "?" + suffix;
+                }
+                break;
             case MySql:
             case DRDS:
             case OceanBase:
@@ -78,6 +87,14 @@ public enum DataBaseType {
         String result = jdbc;
         String suffix = null;
         switch (this) {
+            case MySql8:
+                suffix = "yearIsDateType=false&zeroDateTimeBehavior=CONVERT_TO_NULL&rewriteBatchedStatements=true&tinyInt1isBit=false";
+                if (jdbc.contains("?")) {
+                    result = jdbc + "&" + suffix;
+                } else {
+                    result = jdbc + "?" + suffix;
+                }
+                break;
             case MySql:
                 suffix = "yearIsDateType=false&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true&tinyInt1isBit=false";
                 if (jdbc.contains("?")) {
@@ -129,6 +146,7 @@ public enum DataBaseType {
         String result = splitPk;
 
         switch (this) {
+            case MySql8:
             case MySql:
             case Oracle:
                 if (splitPk.length() >= 2 && splitPk.startsWith("`") && splitPk.endsWith("`")) {
@@ -157,6 +175,7 @@ public enum DataBaseType {
         String result = columnName;
 
         switch (this) {
+            case MySql8:
             case MySql:
                 result = "`" + columnName.replace("`", "``") + "`";
                 break;
@@ -181,6 +200,7 @@ public enum DataBaseType {
         String result = tableName;
 
         switch (this) {
+            case MySql8:
             case MySql:
                 result = "`" + tableName.replace("`", "``") + "`";
                 break;
