@@ -43,7 +43,7 @@ public enum DataBaseType {
         String suffix = null;
         switch (this) {
             case MySql8:
-                suffix = "yearIsDateType=false&zeroDateTimeBehavior=CONVERT_TO_NULL&tinyInt1isBit=false&rewriteBatchedStatements=true";
+                suffix = "yearIsDateType=false&zeroDateTimeBehavior=CONVERT_TO_NULL&tinyInt1isBit=false&rewriteBatchedStatements=true&serverTimezone=GMT%2B8";
                 if (jdbc.contains("?")) {
                     result = jdbc + "&" + suffix;
                 } else {
@@ -88,7 +88,7 @@ public enum DataBaseType {
         String suffix = null;
         switch (this) {
             case MySql8:
-                suffix = "yearIsDateType=false&zeroDateTimeBehavior=CONVERT_TO_NULL&rewriteBatchedStatements=true&tinyInt1isBit=false";
+                suffix = "yearIsDateType=false&zeroDateTimeBehavior=CONVERT_TO_NULL&rewriteBatchedStatements=true&tinyInt1isBit=false&serverTimezone=GMT%2B8";
                 if (jdbc.contains("?")) {
                     result = jdbc + "&" + suffix;
                 } else {
